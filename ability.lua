@@ -206,7 +206,7 @@ function ability.OnUpdate()
                     Particle.SetControlPoint(ability.particle, 6, Vector(1, 0, 0))
                     Particle.SetControlPoint(ability.particle, 7, Entity.GetOrigin(target))
                 end
-                if (not ability.channelling[me] or ability.channelling[me] < GameRules.GetGameTime()) and not NPC.IsChannellingAbility(me) and not NPC.HasModifier(me, "modifier_spirit_breaker_charge_of_darkness") and not NPC.HasModifier(me, "modifier_monkey_king_bounce_leap") and not NPC.HasModifier(me, "modifier_snapfire_mortimer_kisses") and not NPC.HasModifier(me, "modifier_primal_beast_onslaught_windup") and not NPC.HasModifier(me, "modifier_void_spirit_dissimilate_phase") and not NPC.IsStunned(me) then
+                if (not ability.channelling[me] or ability.channelling[me] < GameRules.GetGameTime()) and not NPC.IsChannellingAbility(me) and not NPC.HasModifier(me, "modifier_spirit_breaker_charge_of_darkness") and not NPC.HasModifier(me, "modifier_monkey_king_bounce_leap") and not NPC.HasModifier(me, "modifier_snapfire_mortimer_kisses") and not NPC.HasModifier(me, "modifier_primal_beast_onslaught_windup") and not NPC.HasModifier(me, "modifier_primal_beast_onslaught_windup") and not NPC.HasModifier(me, "modifier_void_spirit_dissimilate_phase") and not NPC.IsStunned(me) then
                     if not ability.orbwalking[me] then
                         if Entity.GetAbsOrigin(me):Distance(Entity.GetAbsOrigin(target)):Length2D() > NPC.GetAttackRange(me) + 90 or NPC.HasModifier(target, "modifier_ghost_state") or NPC.HasModifier(target, "modifier_item_ethereal_blade_ethereal") or NPC.HasModifier(me, "modifier_windrunner_focusfire") or NPC.HasModifier(me, "modifier_prevent_taunts") or NPC.HasModifier(me, "modifier_weaver_shukuchi") or not ability.safe_cast(me, target) then
                             if not ability.walking[me] or ability.walking[me] < GameRules.GetGameTime() then
@@ -389,10 +389,14 @@ function ability.OnUpdate()
                         for _, handle in pairs(ability.handle) do
                             if handle.spell and Entity.IsAbility(handle.spell) then
                                 if Ability.GetName(item) == "item_blink" or Ability.GetName(item) == "item_overwhelming_blink" or Ability.GetName(item) == "item_swift_blink" or Ability.GetName(item) == "item_arcane_blink" then
+                                    if Entity.GetAbsOrigin(me):Distance(Entity.GetAbsOrigin(target)):Length2D() < 1250 and Ability.IsReady(handle.spell) then
+                                        if Ability.GetName(handle.spell) == "legion_commander_overwhelming_odds" then ability.sleeptime["legion_commander_overwhelming_odds"] = GameRules.GetGameTime() + (NetChannel.GetAvgLatency(0) + NetChannel.GetAvgLatency(1)) + 0.5 end
+                                        if Ability.GetName(handle.spell) == "legion_commander_press_the_attack" then Ability.CastTarget(handle.spell, me) ability.sleeptime["legion_commander_press_the_attack"], ability.sleeptime[Ability.GetName(item)] = GameRules.GetGameTime() + (NetChannel.GetAvgLatency(0) + NetChannel.GetAvgLatency(1)) + 0.5, GameRules.GetGameTime() + (NetChannel.GetAvgLatency(0) + NetChannel.GetAvgLatency(1)) + 0.5 end
+                                    end
                                     if Ability.IsReady(handle.spell) and ((Ability.GetDispellableType(handle.spell) == 1 or Ability.GetName(handle.spell) == "tinker_rearm" or Ability.GetName(handle.spell) == "juggernaut_omni_slash" or Ability.GetName(handle.spell) == "legion_commander_duel" or Ability.GetName(handle.spell) == "axe_berserkers_call" or Ability.GetName(handle.spell) == "nevermore_requiem" or Ability.GetName(handle.spell) == "arc_warden_flux" or Ability.GetName(handle.spell) == "dark_willow_shadow_realm" or Ability.GetName(handle.spell) == "meepo_poof") and Ability.GetName(handle.spell) ~= "meepo_divided_we_stand" and Ability.GetName(handle.spell) ~= "mars_spear") then
                                         if Ability.GetName(handle.spell) == "techies_land_mines" or Ability.GetName(handle.spell) == "storm_spirit_ball_lightning" or Ability.GetName(handle.spell) == "ancient_apparition_ice_blast" or Ability.GetName(handle.spell) == "meepo_poof" or Ability.GetName(handle.spell) == "death_prophet_exorcism" or Ability.GetName(handle.spell) == "nevermore_requiem" or Ability.GetName(handle.spell) == "dark_willow_shadow_realm" then handle.distance = 0 end
                                         if Ability.GetName(handle.spell) ~= "tinker_rearm" then
-                                            if Entity.GetAbsOrigin(me):Distance(Entity.GetAbsOrigin(target)):Length2D() < 1199 + handle.distance - 150 and Entity.GetAbsOrigin(me):Distance(Entity.GetAbsOrigin(target)):Length2D() > handle.distance then
+                                            if (handle.distance < 410 and Entity.GetAbsOrigin(me):Distance(Entity.GetAbsOrigin(target)):Length2D() < 1199 or handle.distance > 410 and Entity.GetAbsOrigin(me):Distance(Entity.GetAbsOrigin(target)):Length2D() < 1199 + handle.distance - 150) and Entity.GetAbsOrigin(me):Distance(Entity.GetAbsOrigin(target)):Length2D() > handle.distance then
                                                 if handle.distance > 550 then
                                                     if handle.distance < NPC.GetAttackRange(me) then range = NPC.GetAttackRange(me) else range = handle.distance end
                                                     Ability.CastPosition(item, Entity.GetAbsOrigin(me) + ((ability.skillshotXYZ(me, target, 1600) - Entity.GetAbsOrigin(me)):Normalized():Scaled(Entity.GetAbsOrigin(target):Distance(Entity.GetAbsOrigin(me)):Length2D() + range - 1199)))
@@ -576,7 +580,6 @@ function ability.OnUpdate()
                     if Ability.GetLevel(spell) > 0 then
                         if Ability.IsReady(spell) then
                             if Ability.GetName(spell) == "axe_berserkers_call" and target and Entity.GetAbsOrigin(me):Distance(Entity.GetAbsOrigin(target)):Length2D() < distance then ability.sleeptime["axe_battle_hunger"] = GameRules.GetGameTime() + (NetChannel.GetAvgLatency(0) + NetChannel.GetAvgLatency(1)) + 0.1 end
-                            if Ability.GetName(spell) == "legion_commander_press_the_attack" then ability.sleeptime["item_blink"] = GameRules.GetGameTime() + (NetChannel.GetAvgLatency(0) + NetChannel.GetAvgLatency(1)) + 0.1 end
                             if Ability.GetName(spell) == "tusk_walrus_punch" then ability.sleeptime["tusk_walrus_kick"] = GameRules.GetGameTime() + (NetChannel.GetAvgLatency(0) + NetChannel.GetAvgLatency(1)) + 0.1 end
                             if Ability.GetName(spell) == "tusk_snowball" then ability.sleeptime["tusk_ice_shards"] = GameRules.GetGameTime() + (NetChannel.GetAvgLatency(0) + NetChannel.GetAvgLatency(1)) + 1 end
                             if Ability.GetName(spell) == "tusk_walrus_kick" then ability.sleeptime["tusk_ice_shards"] = GameRules.GetGameTime() + (NetChannel.GetAvgLatency(0) + NetChannel.GetAvgLatency(1)) + 2 end
@@ -737,7 +740,7 @@ function ability.OnUpdate()
 
                     if Ability.GetName(spell) ~= "rubick_spell_steal" and Ability.IsReady(spell) and Ability.IsCastable(spell, NPC.GetMana(me)) and (not NPC.IsChannellingAbility(me) or Ability.GetName(spell) == "pudge_rot") then
                         if target and ability.safe_cast(me, target) then
-                            --if ((Ability.GetBehavior(spell) & Enum.AbilityBehavior.DOTA_ABILITY_BEHAVIOR_NO_TARGET) ~= 0 or (Ability.GetBehavior(spell) & Enum.AbilityBehavior.DOTA_ABILITY_BEHAVIOR_TOGGLE) ~= 0) and NPC.GetTimeToFace(target, me) > 0.03 and NPC.IsRunning(target) then distance = distance - NPC.GetMoveSpeed(target) end
+                            if ((Ability.GetBehavior(spell) & Enum.AbilityBehavior.DOTA_ABILITY_BEHAVIOR_NO_TARGET) ~= 0 or (Ability.GetBehavior(spell) & Enum.AbilityBehavior.DOTA_ABILITY_BEHAVIOR_TOGGLE) ~= 0) and NPC.GetTimeToFace(target, me) > 0.03 and NPC.IsRunning(target) then distance = distance - NPC.GetMoveSpeed(target) end
                             if not NPC.HasModifier(me, "modifier_snapfire_mortimer_kisses") and (not NPC.HasState(me, Enum.ModifierState.MODIFIER_STATE_INVISIBLE) or Ability.GetName(spell) == "riki_blink_strike" or target and ability.calling[NPC.GetUnitName(target)] and ability.calling[NPC.GetUnitName(target)] == "damaged" or Ability.GetName(spell) == "bounty_hunter_track") and not NPC.HasModifier(me, "modifier_meepo_petrify") and ability.npc_stunned(spell, target) and (ability.sleeptime[Ability.GetName(spell)] == 0 or GameRules.GetGameTime() > ability.sleeptime[Ability.GetName(spell)]) and (not ability.channelling[me] or ability.channelling[me] < GameRules.GetGameTime()) and not NPC.IsChannellingAbility(me) and not NPC.IsStunned(me) and not NPC.IsSilenced(me) and Ability.IsReady(spell) then
                                 if Entity.GetAbsOrigin(me):Distance(Entity.GetAbsOrigin(target)):Length2D() < distance and (Ability.GetName(spell) == "tinker_keen_teleport" or Ability.GetDamageType(spell) ~= 2 or Ability.GetDamageType(spell) == 2 and not NPC.HasState(target, Enum.ModifierState.MODIFIER_STATE_MAGIC_IMMUNE)) and (ethereal_blade and Ability.GetDamageType(spell) ~= 2 or not ethereal_blade or ethereal_blade and (Ability.SecondsSinceLastUse(ethereal_blade) > Entity.GetAbsOrigin(me):Distance(Entity.GetAbsOrigin(target)):Length2D() / 1250 or Entity.GetAbsOrigin(me):Distance(Entity.GetAbsOrigin(target)):Length2D() > Ability.GetCastRange(ethereal_blade))) then
                                     if (Ability.GetBehavior(spell) & Enum.AbilityBehavior.DOTA_ABILITY_BEHAVIOR_NO_TARGET) ~= 0 then
@@ -959,6 +962,11 @@ function ability.OnUpdate()
                                             if cast_replicate then
                                                 Ability.CastNoTarget(spell)
                                                 ability.sleeptime[Ability.GetName(spell)] = GameRules.GetGameTime() + (NetChannel.GetAvgLatency(0) + NetChannel.GetAvgLatency(1)) + swich_time
+                                            end
+                                        elseif Ability.GetName(spell) == "primal_beast_uproar" then
+                                            if not NPC.HasModifier(me, "modifier_primal_beast_onslaught_windup") and not NPC.HasModifier(me, "modifier_primal_beast_trample") and NPC.GetModifier(me, "modifier_primal_beast_uproar") and Modifier.GetStackCount(NPC.GetModifier(me, "modifier_primal_beast_uproar")) == 5 then
+                                                Ability.CastNoTarget(spell)
+                                                ability.sleeptime[Ability.GetName(spell)] = GameRules.GetGameTime() + (NetChannel.GetAvgLatency(0) + NetChannel.GetAvgLatency(1)) + 0.5
                                             end
                                         elseif Ability.GetName(spell) == "tinker_keen_teleport" then
                                         elseif Ability.GetName(spell) == "spectre_haunt" and not Ability.IsStolen(spell) then
@@ -1651,16 +1659,14 @@ function ability.OnUpdate()
                                                 Ability.CastPosition(spell, ability.skillshotXYZ(me, target, 1600) + (ability.skillshotXYZ(me, target, 1600) - Entity.GetAbsOrigin(me)):Normalized():Scaled(300))
                                                 ability.sleeptime[Ability.GetName(spell)] = GameRules.GetGameTime() + (NetChannel.GetAvgLatency(0) + NetChannel.GetAvgLatency(1)) + 0.3
                                             end
-                                        elseif Ability.GetName(spell) == "primal_beast_onslaught" then
-                                            if ability.sleeptime["primal_beast_rock_throw"] and ability.sleeptime["primal_beast_rock_throw"] > 0 or NPC.IsStunned(target) or Entity.GetAbsOrigin(me):Distance(Entity.GetAbsOrigin(target)):Length2D() < 650 then
-                                                Ability.CastPosition(spell, ability.skillshotXYZ(me, target, 1000))
-                                                ability.sleeptime["primal_beast_onslaught_release"], ability.sleeptime[Ability.GetName(spell)] = GameRules.GetGameTime() + (NetChannel.GetAvgLatency(0) + NetChannel.GetAvgLatency(1)) + Entity.GetAbsOrigin(me):Distance(Entity.GetAbsOrigin(target)):Length2D() / 1000, GameRules.GetGameTime() + (NetChannel.GetAvgLatency(0) + NetChannel.GetAvgLatency(1)) + 0.5
-                                            end
                                         elseif Ability.GetName(spell) == "primal_beast_rock_throw" then
-                                            if Ability.IsStolen(spell) or ability.skillshotXYZ(me, target, 950):Distance(Entity.GetAbsOrigin(me)):Length2D() > 550 then
+                                            if Entity.GetAbsOrigin(me):Distance(Entity.GetAbsOrigin(target)):Length2D() > 550 then
                                                 Ability.CastPosition(spell, ability.skillshotXYZ(me, target, 800))
                                                 ability.sleeptime[Ability.GetName(spell)] = GameRules.GetGameTime() + (NetChannel.GetAvgLatency(0) + NetChannel.GetAvgLatency(1)) + 0.5
                                             end
+                                        elseif Ability.GetName(spell) == "primal_beast_onslaught" then
+                                                Ability.CastPosition(spell, ability.skillshotXYZ(me, target, 1000))
+                                                ability.sleeptime["primal_beast_onslaught_release"], ability.sleeptime[Ability.GetName(spell)] = GameRules.GetGameTime() + (NetChannel.GetAvgLatency(0) + NetChannel.GetAvgLatency(1)) + Entity.GetAbsOrigin(me):Distance(Entity.GetAbsOrigin(target)):Length2D() / 600, GameRules.GetGameTime() + (NetChannel.GetAvgLatency(0) + NetChannel.GetAvgLatency(1)) + 0.5
                                         elseif Ability.GetName(spell) == "keeper_of_the_light_blinding_light" or Ability.GetName(spell) == "keeper_of_the_light_blinding_light" then
                                             if NPC.FindFacingNPC(target, nil, 0, NPC.GetAttackRange(target), 25) == me then
                                                 Ability.CastPosition(spell, ability.skillshotXYZ(me, target, 950) + ((Entity.GetAbsOrigin(me) - ability.skillshotXYZ(me, target, 950)):Normalized():Scaled(100)))
@@ -2293,7 +2299,6 @@ function ability.get_distance(spell, npc)
             {name = "antimage_counterspell", radius = 1000},
             {name = "arc_warden_tempest_double", radius = 900},
             {name = "alchemist_chemical_rage", radius = 1000},
-            {name = "axe_berserkers_call", radius = 300},
             {name = "batrider_firefly", radius = 550},
             {name = "brewmaster_thunder_clap", radius = 400},
             {name = "brewmaster_drunken_brawler", radius = 99999},
@@ -2481,7 +2486,8 @@ function ability.get_distance(spell, npc)
             {name = "tusk_launch_snowball", radius = 99999},
             {name = "hoodwink_scurry", radius = 2000},
             {name = "bloodseeker_blood_mist", radius = 1200},
-            {name = "legion_commander_press_the_attack", radius = 1200},
+            {name = "primal_beast_uproar", radius = NPC.GetAttackRange(npc)},
+            {name = "legion_commander_press_the_attack", radius = NPC.GetAttackRange(npc)},
             {name = "weaver_geminate_attack", radius = NPC.GetAttackRange(npc)},
             {name = "terrorblade_demon_zeal", radius = NPC.GetAttackRange(npc)},
             {name = "phantom_lancer_juxtapose", radius = NPC.GetAttackRange(npc)},
@@ -2504,6 +2510,7 @@ function ability.get_distance(spell, npc)
             {name = "vengefulspirit_magic_missile", new_radius = Ability.GetCastRange(spell) + 100, upgrade = "shard"},
             {name = "faceless_void_time_walk", radius = Ability.GetLevelSpecialValueFor(spell, "range"), new_radius = Ability.GetLevelSpecialValueFor(spell, "range") + 400, upgrade = "shard"},
             --talent_name
+            {name = "axe_berserkers_call", radius = 300, new_radius = 400, talent_name = "special_bonus_unique_axe_2"},
             {name = "marci_companion_run", new_radius = 2125, talent_name = "special_bonus_unique_marci_lunge_range"},
             {name = "lion_impale", new_radius = Ability.GetCastRange(spell) + 800, talent_name = "special_bonus_unique_lion_2"},
             {name = "lion_voodoo", new_radius = Ability.GetCastRange(spell) + 150, talent_name = "special_bonus_unique_lion_4"},
