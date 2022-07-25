@@ -368,7 +368,7 @@ function ability.OnUpdate()
             for i = 0, 16 do
                 local item = NPC.GetItemByIndex(me, i)
                 if (i < 6 or i == 16) and item and not NPC.HasModifier(me, "modifier_illusion") then
-                    if not ability.printing[Ability.GetName(item)] then Console.Print(Ability.GetName(item) .. " cost: " .. Item.GetCost(item)) ability.printing[Ability.GetName(item)] = item end
+                    --if not ability.printing[Ability.GetName(item)] then Console.Print(Ability.GetName(item) .. " cost: " .. Item.GetCost(item)) ability.printing[Ability.GetName(item)] = item end
                     local distance = ability.get_distance(item, me)
                     if distance > 200 then distance = distance + 50 end
                     if not ability.handle[Ability.GetName(item)] and Entity.IsAbility(item) then
