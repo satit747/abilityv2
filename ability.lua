@@ -194,7 +194,7 @@ function ability.OnUpdate()
 
     for _, me in ipairs(mytable) do
         if me then
-            local ability0, ability1, ability2, ability3, ability4, ability5, cast_rearm, cast_replicate = NPC.GetAbilityByIndex(me, 0), NPC.GetAbilityByIndex(me, 1), NPC.GetAbilityByIndex(me, 2), NPC.GetAbilityByIndex(me, 3), NPC.GetAbilityByIndex(me, 4), NPC.GetAbilityByIndex(me, 5), true, true
+            local ability0, ability1, ability2, ability3, ability4, ability5, cast_rearm = NPC.GetAbilityByIndex(me, 0), NPC.GetAbilityByIndex(me, 1), NPC.GetAbilityByIndex(me, 2), NPC.GetAbilityByIndex(me, 3), NPC.GetAbilityByIndex(me, 4), NPC.GetAbilityByIndex(me, 5), true
             local ethereal_blade, force_staff = NPC.GetItem(me, "item_ethereal_blade"), NPC.GetItem(me, "item_force_staff") or NPC.GetItem(me, "item_hurricane_pike")
             local dagon = NPC.GetItem(me, "item_dagon_1") or NPC.GetItem(me, "item_dagon_2") or NPC.GetItem(me, "item_dagon_3") or NPC.GetItem(me, "item_dagon_4") or NPC.GetItem(me, "item_dagon_5")
             if not target and Input.GetNearestHeroToCursor(Entity.GetTeamNum(me), 0) and NPC.IsPositionInRange(Input.GetNearestHeroToCursor(Entity.GetTeamNum(me), 0), Input.GetWorldCursorPos(), 300) then target = Input.GetNearestHeroToCursor(Entity.GetTeamNum(me), 0) end
@@ -206,7 +206,7 @@ function ability.OnUpdate()
                     Particle.SetControlPoint(ability.particle, 6, Vector(1, 0, 0))
                     Particle.SetControlPoint(ability.particle, 7, Entity.GetOrigin(target))
                 end
-                if (not ability.channelling[me] or ability.channelling[me] < GameRules.GetGameTime()) and not NPC.IsChannellingAbility(me) and not NPC.HasModifier(me, "modifier_spirit_breaker_charge_of_darkness") and not NPC.HasModifier(me, "modifier_monkey_king_bounce_leap") and not NPC.HasModifier(me, "modifier_snapfire_mortimer_kisses") and not NPC.HasModifier(me, "modifier_primal_beast_onslaught_windup") and not NPC.HasModifier(me, "modifier_primal_beast_onslaught_windup") and not NPC.HasModifier(me, "modifier_void_spirit_dissimilate_phase") and not NPC.IsStunned(me) then
+                if (not ability.channelling[me] or ability.channelling[me] < GameRules.GetGameTime()) and not NPC.IsChannellingAbility(me) and not NPC.HasModifier(me, "modifier_hoodwink_sharpshooter_windup") and not NPC.HasModifier(me, "modifier_spirit_breaker_charge_of_darkness") and not NPC.HasModifier(me, "modifier_monkey_king_bounce_leap") and not NPC.HasModifier(me, "modifier_snapfire_mortimer_kisses") and not NPC.HasModifier(me, "modifier_primal_beast_onslaught_windup") and not NPC.HasModifier(me, "modifier_primal_beast_onslaught_windup") and not NPC.HasModifier(me, "modifier_void_spirit_dissimilate_phase") and not NPC.IsStunned(me) then
                     if not ability.orbwalking[me] then
                         if Entity.GetAbsOrigin(me):Distance(Entity.GetAbsOrigin(target)):Length2D() > NPC.GetAttackRange(me) + 90 or NPC.HasModifier(target, "modifier_ghost_state") or NPC.HasModifier(target, "modifier_item_ethereal_blade_ethereal") or NPC.HasModifier(me, "modifier_windrunner_focusfire") or NPC.HasModifier(me, "modifier_prevent_taunts") or NPC.HasModifier(me, "modifier_weaver_shukuchi") or not ability.safe_cast(me, target) then
                             if not ability.walking[me] or ability.walking[me] < GameRules.GetGameTime() then
@@ -246,7 +246,7 @@ function ability.OnUpdate()
                 if handle.spell and Entity.IsAbility(handle.spell) then
                     if Ability.IsReady(handle.spell) and not NPC.IsStunned(me) and not NPC.IsSilenced(me) and not NPC.HasState(me, Enum.ModifierState.MODIFIER_STATE_INVISIBLE) then
                         for caster, date in pairs(ability.defender) do
-                            if date.spell and NPC.GetActivity(date.unit) ~= 1500 and NPC.GetTimeToFace(caster, Heroes.GetLocal()) < 0.02 and Entity.GetAbsOrigin(me):Distance(Entity.GetAbsOrigin(caster)):Length2D() < handle.distance then
+                            if date.spell and NPC.GetActivity(date.unit) ~= 1500 and NPC.GetTimeToFace(caster, me) < 0.02 and Entity.GetAbsOrigin(me):Distance(Entity.GetAbsOrigin(caster)):Length2D() < handle.distance then
                                 if (Ability.GetBehavior(date.spell) & Enum.AbilityBehavior.DOTA_ABILITY_BEHAVIOR_UNIT_TARGET) ~= 0 then
                                     if not NPC.HasModifier(caster, "modifier_antimage_counterspell") and not NPC.HasModifier(caster, "modifier_item_lotus_orb_active") and not NPC.HasState(caster, Enum.ModifierState.MODIFIER_STATE_MAGIC_IMMUNE) and ((Ability.GetBehavior(handle.spell) & Enum.AbilityBehavior.DOTA_ABILITY_BEHAVIOR_UNIT_TARGET) ~= 0 and Ability.GetDispellableType(handle.spell) == 1 and Ability.GetCastPoint(handle.spell) == 0 or Ability.GetName(handle.spell) == "item_orchid" or Ability.GetName(handle.spell) == "item_bloodthorn") then
                                         Ability.CastTarget(handle.spell, caster)
@@ -332,9 +332,7 @@ function ability.OnUpdate()
                         if Ability.GetName(handle.spell) ~= "tinker_warp_grenade" and (Ability.GetName(handle.spell) == "tinker_heat_seeking_missile" or (Ability.GetBehavior(handle.spell) & Enum.AbilityBehavior.DOTA_ABILITY_BEHAVIOR_UNIT_TARGET) ~= 0 and target and Entity.GetAbsOrigin(me):Distance(Entity.GetAbsOrigin(target)):Length2D() < Ability.GetCastRange(handle.spell) or (Ability.GetBehavior(handle.spell) & Enum.AbilityBehavior.DOTA_ABILITY_BEHAVIOR_POINT) ~= 0) and (Ability.GetTargetTeam(handle.spell) & Enum.TargetTeam.DOTA_UNIT_TARGET_TEAM_FRIENDLY) == 0 then
                             cast_rearm = false
                         end
-                        if Ability.GetName(handle.spell) ~= "morphling_morph_replicate" and not Ability.IsItem(handle.spell) and not Ability.IsPassive(handle.spell) and ((Ability.GetBehavior(handle.spell) & Enum.AbilityBehavior.DOTA_ABILITY_BEHAVIOR_UNIT_TARGET) or (Ability.GetBehavior(handle.spell) & Enum.AbilityBehavior.DOTA_ABILITY_BEHAVIOR_POINT) ~= 0) and (Ability.GetTargetTeam(handle.spell) & Enum.TargetTeam.DOTA_UNIT_TARGET_TEAM_FRIENDLY) == 0 then
-                            cast_replicate = false
-                        end
+
                     end
                     if Ability.GetName(handle.spell) == "weaver_time_lapse" then
                         if not ability.tracking[GameRules.GetGameTime()] then
@@ -357,10 +355,21 @@ function ability.OnUpdate()
                             end
                         end
                     end
-                    if not string.find(Ability.GetName(handle.spell), "morphling_") and not Ability.IsPassive(handle.spell) and ((Ability.GetBehavior(handle.spell) & Enum.AbilityBehavior.DOTA_ABILITY_BEHAVIOR_UNIT_TARGET) or (Ability.GetBehavior(handle.spell) & Enum.AbilityBehavior.DOTA_ABILITY_BEHAVIOR_POINT) ~= 0) and (Ability.GetTargetTeam(handle.spell) & Enum.TargetTeam.DOTA_UNIT_TARGET_TEAM_FRIENDLY) == 0 and Ability.GetCooldown(handle.spell) > 0 then
-                        if not ability.cooldown[Ability.GetName(handle.spell)] then
-                            ability.cooldown[Ability.GetName(handle.spell)] =  {cooldown = Ability.GetCooldown(handle.spell), time = GameRules.GetGameTime()}
+
+                    if NPC.HasModifier(me, "modifier_morphling_replicate") then
+                        if not string.find(Ability.GetName(handle.spell), "morphling_") and not Ability.IsPassive(handle.spell) and not Ability.IsItem(handle.spell) then
+                            if Ability.GetCooldown(handle.spell) > 0 then
+                                if Ability.IsItem(handle.spell) and ((Ability.GetBehavior(handle.spell) & Enum.AbilityBehavior.DOTA_ABILITY_BEHAVIOR_NO_TARGET) ~= 0 or (Ability.GetBehavior(handle.spell) & Enum.AbilityBehavior.DOTA_ABILITY_BEHAVIOR_UNIT_TARGET) or (Ability.GetBehavior(handle.spell) & Enum.AbilityBehavior.DOTA_ABILITY_BEHAVIOR_POINT) ~= 0) and (Ability.GetTargetTeam(handle.spell) & Enum.TargetTeam.DOTA_UNIT_TARGET_TEAM_FRIENDLY) == 0 and target and Entity.GetAbsOrigin(me):Distance(Entity.GetAbsOrigin(target)):Length2D() < handle.distance then
+                                    cast_replicate = false
+                                end
+                            else
+                                cast_replicate = true
+                                --i am not morphling😱
+                            end
                         end
+                    else
+                        cast_replicate = false
+                        --i am morphling😃
                     end
                 end
             end
@@ -637,19 +646,6 @@ function ability.OnUpdate()
                         end
                     end
                     if Ability.GetName(spell) == "meepo_poof" and ability.cast_pos["meepo_poof"] and Ability.SecondsSinceLastUse(spell) > 3 then ability.cast_pos["meepo_poof"] = nil end
-                    
-                    if NPC.HasModifier(me, "modifier_morphling_replicate") then
-                        for name, value in pairs(ability.cooldown) do
-                            if value.time then
-                                if value.time + value.cooldown > GameRules.GetGameTime() then
-                                    swich_time, ability.cooldown[name] = value.cooldown, nil
-                                end
-                                if value.time + value.cooldown < GameRules.GetGameTime() then
-                                    swich_time, ability.cooldown[name] = 0.15, nil
-                                end
-                            end
-                        end
-                    end
 
                     if ability5 and Ability.GetName(ability5) == "rubick_spell_steal" then
                         if Ability.GetName(spell) == "wisp_spirits_in" or Ability.GetName(spell) == "shredder_return_chakram" or Ability.GetName(spell) == "pangolier_gyroshell_stop" or Ability.GetCooldown(spell) > 0 or ((Ability.GetName(spell) == "slark_pounce" or Ability.GetName(spell) == "ember_spirit_fire_remnant" or Ability.GetName(spell) == "sniper_shrapnel" or Ability.GetName(spell) == "void_spirit_resonant_pulse" or Ability.GetName(spell) == "void_spirit_astral_step" or Ability.GetName(spell) == "hoodwink_scurry" or Ability.GetName(spell) == "techies_land_mines") and Ability.GetCurrentCharges(spell) == 0) then
@@ -806,9 +802,6 @@ function ability.OnUpdate()
                                                 Player.PrepareUnitOrders(Players.GetLocal(), 1, nil, Input.GetWorldCursorPos(), nil, Enum.PlayerOrderIssuer.DOTA_ORDER_ISSUER_HERO_ONLY, me)
                                                 ability.sleeptime[Ability.GetName(spell)] = GameRules.GetGameTime() + (NetChannel.GetAvgLatency(0) + NetChannel.GetAvgLatency(1)) + 0.5
                                             end
-                                        elseif Ability.GetName(spell) == "hoodwink_sharpshooter_release" then
-                                            Ability.CastPosition(spell, ability.skillshotXYZ(me, target, 2200))
-                                            ability.sleeptime[Ability.GetName(spell)] = GameRules.GetGameTime() + (NetChannel.GetAvgLatency(0) + NetChannel.GetAvgLatency(1)) + 0.5
                                         elseif Ability.GetName(spell) == "alchemist_chemical_rage" or Ability.GetName(spell) == "sniper_take_aim" then
                                             if Entity.GetAbsOrigin(me):Distance(Entity.GetAbsOrigin(target)):Length2D() < NPC.GetAttackRange(me) + 200 then
                                                 Ability.CastNoTarget(spell)
@@ -851,7 +844,6 @@ function ability.OnUpdate()
                                                 Ability.CastNoTarget(spell)
                                                 toggle_move = false
                                             end
-                                        elseif Ability.GetName(spell) == "phoenix_icarus_dive_stop" then
                                             --nah?!
                                         elseif Ability.GetName(spell) == "magnataur_horn_toss" then
                                             if ability5 and (Ability.SecondsSinceLastUse(ability5) > 1 or Ability.SecondsSinceLastUse(ability5) < 0) then
@@ -968,7 +960,7 @@ function ability.OnUpdate()
                                         elseif Ability.GetName(spell) == "morphling_morph_replicate" then
                                             if cast_replicate then
                                                 Ability.CastNoTarget(spell)
-                                                ability.sleeptime[Ability.GetName(spell)] = GameRules.GetGameTime() + (NetChannel.GetAvgLatency(0) + NetChannel.GetAvgLatency(1)) + swich_time
+                                                ability.sleeptime[Ability.GetName(spell)] = GameRules.GetGameTime() + (NetChannel.GetAvgLatency(0) + NetChannel.GetAvgLatency(1)) + 0.5
                                             end
                                         elseif Ability.GetName(spell) == "primal_beast_uproar" then
                                             if not NPC.HasModifier(me, "modifier_primal_beast_onslaught_windup") and not NPC.HasModifier(me, "modifier_primal_beast_trample") and NPC.GetModifier(me, "modifier_primal_beast_uproar") and Modifier.GetStackCount(NPC.GetModifier(me, "modifier_primal_beast_uproar")) == 5 then
@@ -976,6 +968,8 @@ function ability.OnUpdate()
                                                 ability.sleeptime[Ability.GetName(spell)] = GameRules.GetGameTime() + (NetChannel.GetAvgLatency(0) + NetChannel.GetAvgLatency(1)) + 0.5
                                             end
                                         elseif Ability.GetName(spell) == "tinker_keen_teleport" then
+                                        elseif Ability.GetName(spell) == "phoenix_icarus_dive_stop" then
+                                        elseif Ability.GetName(spell) == "hoodwink_sharpshooter_release" then
                                         elseif Ability.GetName(spell) == "spectre_haunt" and not Ability.IsStolen(spell) then
                                         elseif not Ability.IsStolen(spell) and 
                                             (Ability.GetName(spell) == "mars_bulwark" or 
@@ -2089,7 +2083,7 @@ function ability.OnUpdate()
                                     end
                                 end
                             end
-                            if (NPC.HasModifier(me, "modifier_primal_beast_onslaught_windup") or NPC.HasModifier(me, "modifier_phoenix_sun_ray") or NPC.HasModifier(me, "modifier_snapfire_mortimer_kisses") or NPC.HasModifier(me, "modifier_void_spirit_dissimilate_phase")) and (not ability.walking[me] or ability.walking[me] < GameRules.GetGameTime()) then
+                            if (NPC.HasModifier(me, "modifier_hoodwink_sharpshooter_windup") or NPC.HasModifier(me, "modifier_phoenix_sun_ray") or NPC.HasModifier(me, "modifier_snapfire_mortimer_kisses") or NPC.HasModifier(me, "modifier_void_spirit_dissimilate_phase")) and (not ability.walking[me] or ability.walking[me] < GameRules.GetGameTime()) then
                                 Player.PrepareUnitOrders(Players.GetLocal(), 1, nil, ability.skillshotXYZ(me, target, 1000), nil, Enum.PlayerOrderIssuer.DOTA_ORDER_ISSUER_HERO_ONLY, me, false, true)
                                 ability.walking[me] = GameRules.GetGameTime() + (NetChannel.GetAvgLatency(0) + NetChannel.GetAvgLatency(1)) + (math.random(6, 9) / 10)
                             end
@@ -2247,7 +2241,7 @@ function ability.skillshotAOE(npc, npc2, radius)
         end
         return Vector(x/c, y/c, 0)
     end
-    return ability.skillshotXYZ(npc, npc2, 2000)
+    return ability.skillshotXYZ(npc, npc2, 1000)
 end
 
 function ability.skillshotFront(npc, npc2, radius)
