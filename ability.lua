@@ -2083,7 +2083,7 @@ function ability.OnUpdate()
                                     end
                                 end
                             end
-                            if (NPC.HasModifier(me, "modifier_hoodwink_sharpshooter_windup") or NPC.HasModifier(me, "modifier_phoenix_sun_ray") or NPC.HasModifier(me, "modifier_snapfire_mortimer_kisses") or NPC.HasModifier(me, "modifier_void_spirit_dissimilate_phase")) and (not ability.walking[me] or ability.walking[me] < GameRules.GetGameTime()) then
+                            if (NPC.HasModifier(me, "modifier_hoodwink_sharpshooter_windup") or NPC.HasModifier(me, "modifier_primal_beast_onslaught_windup") or NPC.HasModifier(me, "modifier_phoenix_sun_ray") or NPC.HasModifier(me, "modifier_snapfire_mortimer_kisses") or NPC.HasModifier(me, "modifier_void_spirit_dissimilate_phase")) and (not ability.walking[me] or ability.walking[me] < GameRules.GetGameTime()) then
                                 Player.PrepareUnitOrders(Players.GetLocal(), 1, nil, ability.skillshotXYZ(me, target, 1000), nil, Enum.PlayerOrderIssuer.DOTA_ORDER_ISSUER_HERO_ONLY, me, false, true)
                                 ability.walking[me] = GameRules.GetGameTime() + (NetChannel.GetAvgLatency(0) + NetChannel.GetAvgLatency(1)) + (math.random(6, 9) / 10)
                             end
