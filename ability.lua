@@ -210,16 +210,16 @@ function ability.OnUpdate()
                     if not ability.orbwalking[me] then
                         if Entity.GetAbsOrigin(me):Distance(Entity.GetAbsOrigin(target)):Length2D() > NPC.GetAttackRange(me) + 90 or NPC.HasModifier(target, "modifier_ghost_state") or NPC.HasModifier(target, "modifier_item_ethereal_blade_ethereal") or NPC.HasModifier(me, "modifier_windrunner_focusfire") or NPC.HasModifier(me, "modifier_prevent_taunts") or NPC.HasModifier(me, "modifier_weaver_shukuchi") or not ability.safe_cast(me, target) then
                             if not ability.walking[me] or ability.walking[me] < GameRules.GetGameTime() then
-                                NPC.MoveTo(me, Input.GetWorldCursorPos())
+                                Player.AttackTarget(Players.GetLocal(), me, target)
                                 ability.walking[me] = GameRules.GetGameTime() + (NetChannel.GetAvgLatency(0) + NetChannel.GetAvgLatency(1)) + (math.random(6, 9) / 10)
                             end
                         else
-                            Player.AttackTarget(Players.GetLocal(), me, target)
+                              Player.AttackTarget(Players.GetLocal(), me, target)
                         end
                     else
                         if ability.orbwalking[me] + NPC.GetAttackTime(me) - (NPC.GetAttackTime(me) / 1.5) < GameRules.GetGameTime() then
                             if not ability.walking[me] or ability.walking[me] < GameRules.GetGameTime() then
-                                NPC.MoveTo(me, Input.GetWorldCursorPos())
+                                Player.AttackTarget(Players.GetLocal(), me, target)
                                 ability.walking[me] = GameRules.GetGameTime() + (NetChannel.GetAvgLatency(0) + NetChannel.GetAvgLatency(1)) + (math.random(6, 9) / 10)
                             end
                         end
@@ -235,7 +235,7 @@ function ability.OnUpdate()
                 end
                 if not target and Menu.IsKeyDown(ability.spellkey) then
                     if not ability.walking[me] or ability.walking[me] < GameRules.GetGameTime() then
-                        NPC.MoveTo(me, Input.GetWorldCursorPos())
+                        Player.AttackTarget(Players.GetLocal(), me, target)
                         ability.walking[me] = GameRules.GetGameTime() + (NetChannel.GetAvgLatency(0) + NetChannel.GetAvgLatency(1)) + (math.random(6, 9) / 10)
                     end
                 end
