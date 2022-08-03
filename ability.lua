@@ -2551,7 +2551,7 @@ function ability.get_distance(spell, npc)
             {name = "dawnbreaker_celestial_hammer", radius = Ability.GetLevelSpecialValueFor(spell, "range"), new_radius = Ability.GetLevelSpecialValueFor(spell, "range") + 1000, talent_name = "special_bonus_unique_dawnbreaker_celestial_hammer_cast_range"},
             --items
             {name = "item_phase_boots", radius = 2000},
-            {name = "item_refresher", radius = 2000},
+          --  {name = "item_refresher", radius = 2000},
             {name = "item_refresher_shard", radius = 2000},
             {name = "item_magic_wand", radius = 2000},
             {name = "item_magic_stick", radius = 2000},
