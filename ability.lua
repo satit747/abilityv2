@@ -2328,7 +2328,7 @@ function ability.get_distance(spell, npc)
         {
             {name = "ancient_apparition_ice_blast", radius = 99999},
             {name = "ancient_apparition_ice_blast_release", radius = 99999},
-            {name = "antimage_counterspell", radius = 1000},
+           -- {name = "antimage_counterspell", radius = 1000},
             {name = "arc_warden_tempest_double", radius = 900},
             {name = "alchemist_chemical_rage", radius = 1000},
             {name = "batrider_firefly", radius = 550},
