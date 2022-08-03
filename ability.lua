@@ -251,7 +251,7 @@ function ability.OnUpdate()
                                     if not NPC.HasModifier(caster, "modifier_antimage_counterspell") and not NPC.HasModifier(caster, "modifier_item_lotus_orb_active") and not NPC.HasState(caster, Enum.ModifierState.MODIFIER_STATE_MAGIC_IMMUNE) and ((Ability.GetBehavior(handle.spell) & Enum.AbilityBehavior.DOTA_ABILITY_BEHAVIOR_UNIT_TARGET) ~= 0 and Ability.GetDispellableType(handle.spell) == 1 and Ability.GetCastPoint(handle.spell) == 0 or Ability.GetName(handle.spell) == "item_orchid" or Ability.GetName(handle.spell) == "item_bloodthorn") then
                                         Ability.CastTarget(handle.spell, caster)
                                         ability.defender[caster] = nil
-                                    elseif (Ability.GetName(handle.spell) == "antimage_counterspell" or Ability.GetName(handle.spell) == "weaver_shukuchi" or Ability.GetName(handle.spell) == "nyx_assassin_spiked_carapace" or Ability.GetName(handle.spell) == "life_stealer_rage") and date.time + date.castpoint - 0.15 - (NetChannel.GetAvgLatency(0) + NetChannel.GetAvgLatency(1)) < GameRules.GetGameTime() then
+                                    elseif (Ability.GetName(handle.spell) == "antimage_counterspell" or Ability.GetName(handle.spell) == "weaver_shukuchi" or Ability.GetName(handle.spell) == "nyx_assassin_spiked_carapace" or Ability.GetName(handle.spell) == "life_stealer_rage" or Ability.GetName(handle.spell) == "doom_bringer_doom") and date.time + date.castpoint - 0.15 - (NetChannel.GetAvgLatency(0) + NetChannel.GetAvgLatency(1)) < GameRules.GetGameTime() then
                                         Ability.CastNoTarget(handle.spell)
                                         ability.defender[caster] = nil
                                     elseif Ability.GetName(handle.spell) == "juggernaut_blade_fury" and date.time + date.castpoint - 0.03 - (NetChannel.GetAvgLatency(0) + NetChannel.GetAvgLatency(1)) < GameRules.GetGameTime() then
@@ -2337,7 +2337,6 @@ function ability.get_distance(spell, npc)
             {name = "bloodseeker_bloodrage", radius = 99999},
             {name = "broodmother_insatiable_hunger", radius = 550},
             {name = "centaur_hoof_stomp", radius = 315},
-            {name = "centaur_khan_war_stomp", radius = 315},
             {name = "centaur_stampede", radius = 99999},
             {name = "chaos_knight_phantasm", radius = 2000},
             {name = "chen_hand_of_god", radius = 99999},
