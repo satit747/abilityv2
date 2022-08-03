@@ -1028,7 +1028,7 @@ function ability.OnUpdate()
                                                     end
                                                 end
                                             elseif Ability.GetName(spell) == "hoodwink_acorn_shot" and not Ability.IsStolen(spell) then
-                                                if not NPC.HasModifier(target, "modifier_antimage_counterspell") and not NPC.HasModifier(target, "modifier_item_lotus_orb_active") then
+                                                if not NPC.HasModifier(target, "modifier_item_lotus_orb_active") then
                                                     local acorn = nil
                                                     for _, unit in ipairs(Entity.GetUnitsInRadius(me, distance + 525, 1, true)) do
                                                         if unit and (NPC.IsCreep(unit) or NPC.IsHero(unit)) and unit ~= target then
