@@ -1010,7 +1010,7 @@ function ability.OnUpdate()
                                         if (Ability.GetBehavior(spell) & Enum.AbilityBehavior.DOTA_ABILITY_BEHAVIOR_UNIT_TARGET) ~= 0 then
                                             if Ability.GetName(spell) == "clinkz_searing_arrows" or Ability.GetName(spell) == "drow_ranger_frost_arrows" or Ability.GetName(spell) == "kunkka_tidebringer" or Ability.GetName(spell) == "viper_poison_attack" or Ability.GetName(spell) == "enchantress_impetus" or Ability.GetName(spell) == "enchantress_impetus" or Ability.GetName(spell) == "huskar_burning_spear" or Ability.GetName(spell) == "bounty_hunter_jinada" or Ability.GetName(spell) == "jakiro_liquid_fire" or Ability.GetName(spell) == "jakiro_liquid_ice" or Ability.GetName(spell) == "doom_bringer_infernal_blade" or Ability.GetName(spell) == "ancient_apparition_chilling_touch" or Ability.GetName(spell) == "silencer_glaives_of_wisdom" or Ability.GetName(spell) == "obsidian_destroyer_arcane_orb" or Ability.GetName(spell) == "tusk_walrus_punch" then
                                                 Ability.CastTarget(spell, target)
-                                                
+                                                ability.orbwalking[me], ability.sleeptime[Ability.GetName(spell)] = GameRules.GetGameTime(), GameRules.GetGameTime() + (NetChannel.GetAvgLatency(0) + NetChannel.GetAvgLatency(1)) + NPC.GetAttackTime(me)
                                             elseif Ability.GetName(spell) == "weaver_geminate_attack" then
                                                 if (not NPC.HasModifier(me, "modifier_weaver_shukuchi") or ability.calling[NPC.GetUnitName(target)] == "damaged" and Entity.GetAbsOrigin(me):Distance(Entity.GetAbsOrigin(target)):Length2D() > NPC.GetAttackRange(me) - 90) then
                                                     Ability.CastTarget(spell, target)
@@ -2337,6 +2337,7 @@ function ability.get_distance(spell, npc)
             {name = "bloodseeker_bloodrage", radius = 99999},
             {name = "broodmother_insatiable_hunger", radius = 550},
             {name = "centaur_hoof_stomp", radius = 315},
+            {name = "centaur_khan_war_stomp", radius = 315},
             {name = "centaur_stampede", radius = 99999},
             {name = "chaos_knight_phantasm", radius = 2000},
             {name = "chen_hand_of_god", radius = 99999},
