@@ -2586,6 +2586,8 @@ function ability.get_distance(spell, npc)
             {name = "item_glimmer_cape", radius = 1000},
             {name = "item_trickster_cloak", radius = 1000},
             {name = "item_seer_stone", radius = 99999}
+			{name = "doom_bringer_doom", radius = 1000}
+			
         }
     ) do
         if lib then
