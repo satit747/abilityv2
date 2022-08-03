@@ -987,7 +987,7 @@ function ability.OnUpdate()
                                             Ability.GetName(spell) == "puck_phase_shift" or 
                                             Ability.GetName(spell) == "life_stealer_rage" or 
                                             Ability.GetName(spell) == "nyx_assassin_spiked_carapace" or 
-                                            Ability.GetName(spell) == "antimage_counterspell" or 
+                                            --Ability.GetName(spell) == "antimage_counterspell" or 
                                             Ability.GetName(spell) == "chaos_knight_phantasm" or 
                                             Ability.GetName(spell) == "phoenix_supernova" or 
                                             Ability.GetName(spell) == "windrunner_windrun" or 
