@@ -248,10 +248,7 @@ function ability.OnUpdate()
                         for caster, date in pairs(ability.defender) do
                             if date.spell and NPC.GetActivity(date.unit) ~= 1500 and NPC.GetTimeToFace(caster, me) < 0.02 and Entity.GetAbsOrigin(me):Distance(Entity.GetAbsOrigin(caster)):Length2D() < handle.distance then
                                 if (Ability.GetBehavior(date.spell) & Enum.AbilityBehavior.DOTA_ABILITY_BEHAVIOR_UNIT_TARGET) ~= 0 then
-                                --    if not NPC.HasModifier(caster, "modifier_antimage_counterspell") and not NPC.HasModifier(caster, "modifier_item_lotus_orb_active") and not NPC.HasState(caster, Enum.ModifierState.MODIFIER_STATE_MAGIC_IMMUNE) and ((Ability.GetBehavior(handle.spell) & Enum.AbilityBehavior.DOTA_ABILITY_BEHAVIOR_UNIT_TARGET) ~= 0 and Ability.GetDispellableType(handle.spell) == 1 and Ability.GetCastPoint(handle.spell) == 0 or Ability.GetName(handle.spell) == "item_orchid" or Ability.GetName(handle.spell) == "item_bloodthorn") then
-                                       -- Ability.CastTarget(handle.spell, caster)
-                                        --ability.defender[caster] = nil
-										 if not NPC.HasModifier(caster, "modifier_item_lotus_orb_active") and not NPC.HasState(caster, Enum.ModifierState.MODIFIER_STATE_MAGIC_IMMUNE) and ((Ability.GetBehavior(handle.spell) & Enum.AbilityBehavior.DOTA_ABILITY_BEHAVIOR_UNIT_TARGET) ~= 0 and Ability.GetDispellableType(handle.spell) == 1 and Ability.GetCastPoint(handle.spell) == 0 or Ability.GetName(handle.spell) == "item_orchid" or Ability.GetName(handle.spell) == "item_bloodthorn") then
+                                    if not NPC.HasModifier(caster, "modifier_antimage_counterspell") and not NPC.HasModifier(caster, "modifier_item_lotus_orb_active") and not NPC.HasState(caster, Enum.ModifierState.MODIFIER_STATE_MAGIC_IMMUNE) and ((Ability.GetBehavior(handle.spell) & Enum.AbilityBehavior.DOTA_ABILITY_BEHAVIOR_UNIT_TARGET) ~= 0 and Ability.GetDispellableType(handle.spell) == 1 and Ability.GetCastPoint(handle.spell) == 0 or Ability.GetName(handle.spell) == "item_orchid" or Ability.GetName(handle.spell) == "item_bloodthorn") then
                                         Ability.CastTarget(handle.spell, caster)
                                         ability.defender[caster] = nil
                                     elseif (Ability.GetName(handle.spell) == "antimage_counterspell" or Ability.GetName(handle.spell) == "weaver_shukuchi" or Ability.GetName(handle.spell) == "nyx_assassin_spiked_carapace" or Ability.GetName(handle.spell) == "life_stealer_rage") and date.time + date.castpoint - 0.15 - (NetChannel.GetAvgLatency(0) + NetChannel.GetAvgLatency(1)) < GameRules.GetGameTime() then
@@ -987,7 +984,7 @@ function ability.OnUpdate()
                                             Ability.GetName(spell) == "puck_phase_shift" or 
                                             Ability.GetName(spell) == "life_stealer_rage" or 
                                             Ability.GetName(spell) == "nyx_assassin_spiked_carapace" or 
-                                            --Ability.GetName(spell) == "antimage_counterspell" or 
+                                            Ability.GetName(spell) == "antimage_counterspell" or 
                                             Ability.GetName(spell) == "chaos_knight_phantasm" or 
                                             Ability.GetName(spell) == "phoenix_supernova" or 
                                             Ability.GetName(spell) == "windrunner_windrun" or 
@@ -1028,7 +1025,7 @@ function ability.OnUpdate()
                                                     end
                                                 end
                                             elseif Ability.GetName(spell) == "hoodwink_acorn_shot" and not Ability.IsStolen(spell) then
-                                                if not NPC.HasModifier(target, "modifier_item_lotus_orb_active") then
+                                                if not NPC.HasModifier(target, "modifier_antimage_counterspell") and not NPC.HasModifier(target, "modifier_item_lotus_orb_active") then
                                                     local acorn = nil
                                                     for _, unit in ipairs(Entity.GetUnitsInRadius(me, distance + 525, 1, true)) do
                                                         if unit and (NPC.IsCreep(unit) or NPC.IsHero(unit)) and unit ~= target then
@@ -1314,7 +1311,7 @@ function ability.OnUpdate()
                                                     end
                                                 end
                                             end
-                                            if not NPC.HasModifier(target, "modifier_item_lotus_orb_active") then
+                                            if not NPC.HasModifier(target, "modifier_antimage_counterspell") and not NPC.HasModifier(target, "modifier_item_lotus_orb_active") then
                                                 if Ability.GetName(spell) == "windrunner_shackleshot" then
                                                     for _, tree in ipairs(Trees.InRadius(Entity.GetAbsOrigin(me), Ability.GetCastRange(spell) + 575, true)) do
                                                         if tree and ability.skillshotXYZ(me, target, 1500):Distance(Entity.GetAbsOrigin(tree)):Length2D() < 575 then
@@ -2328,7 +2325,7 @@ function ability.get_distance(spell, npc)
         {
             {name = "ancient_apparition_ice_blast", radius = 99999},
             {name = "ancient_apparition_ice_blast_release", radius = 99999},
-           -- {name = "antimage_counterspell", radius = 1000},
+            {name = "antimage_counterspell", radius = 1000},
             {name = "arc_warden_tempest_double", radius = 900},
             {name = "alchemist_chemical_rage", radius = 1000},
             {name = "batrider_firefly", radius = 550},
