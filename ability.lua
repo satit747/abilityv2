@@ -573,7 +573,7 @@ function ability.OnUpdate()
                                 elseif Ability.GetName(item) == "item_pogo_stick" then
                                 elseif Ability.GetName(item) == "item_ring_of_aquila" then
                                 elseif Ability.GetName(item) == "item_vambrace" then
-                                elseif Ability.GetName(item) == "item_refresher_shard" or Ability.GetName(item) == "item_refresher" or Ability.GetName(item) == "item_mask_of_madness" then
+                               -- elseif Ability.GetName(item) == "item_refresher_shard" or Ability.GetName(item) == "item_refresher" or Ability.GetName(item) == "item_mask_of_madness" then
                                 else
                                     Ability.CastNoTarget(item)
                                     ability.sleeptime[Ability.GetName(item)] = GameRules.GetGameTime() + (NetChannel.GetAvgLatency(0) + NetChannel.GetAvgLatency(1)) + 0.5
