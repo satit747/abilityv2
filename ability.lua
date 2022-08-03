@@ -426,9 +426,9 @@ function ability.OnUpdate()
                                         Ability.CastTarget(item, me)
                                         ability.sleeptime[Ability.GetName(item)] = GameRules.GetGameTime() + (NetChannel.GetAvgLatency(0) + NetChannel.GetAvgLatency(1)) + 0.5
                                     end
-                                elseif Ability.GetName(item) == "item_refresher_shard" or Ability.GetName(item) == "item_refresher" then
-                                    if Ability.GetType(handle.spell) == 1 and (Ability.GetName(handle.spell) ~= "techies_land_mines" and Ability.SecondsSinceLastUse(handle.spell) > 1 and Ability.SecondsSinceLastUse(handle.spell) < 5 or Ability.GetName(handle.spell) == "techies_land_mines" and Ability.GetCurrentCharges(handle.spell) == 0) and NPC.GetMana(Heroes.GetLocal()) > Ability.GetManaCost(handle.spell) + Ability.GetManaCost(item) then
-                                        Ability.CastNoTarget(item)
+                                --elseif Ability.GetName(item) == "item_refresher_shard" or Ability.GetName(item) == "item_refresher" then
+                                    --if Ability.GetType(handle.spell) == 1 and (Ability.GetName(handle.spell) ~= "techies_land_mines" and Ability.SecondsSinceLastUse(handle.spell) > 1 and Ability.SecondsSinceLastUse(handle.spell) < 5 or Ability.GetName(handle.spell) == "techies_land_mines" and Ability.GetCurrentCharges(handle.spell) == 0) and NPC.GetMana(Heroes.GetLocal()) > Ability.GetManaCost(handle.spell) + Ability.GetManaCost(item) then
+                                       -- Ability.CastNoTarget(item)
                                         if Ability.GetName(handle.spell) == "faceless_void_chronosphere" then ability.sleeptime["faceless_void_chronosphere"] = GameRules.GetGameTime() + (NetChannel.GetAvgLatency(0) + NetChannel.GetAvgLatency(1)) + Ability.GetLevelSpecialValueFor(handle.spell, "duration") - 1.8 end
                                         ability.sleeptime["item_refresher_shard"], ability.sleeptime["item_refresher"] = GameRules.GetGameTime() + (NetChannel.GetAvgLatency(0) + NetChannel.GetAvgLatency(1)) + 0.5, GameRules.GetGameTime() + (NetChannel.GetAvgLatency(0) + NetChannel.GetAvgLatency(1)) + 0.5
                                         if Ability.GetName(handle.spell) == "tidehunter_ravage" then ability.sleeptime["tidehunter_ravage"] = GameRules.GetGameTime() + (NetChannel.GetAvgLatency(0) + NetChannel.GetAvgLatency(1)) + Ability.GetLevelSpecialValueFor(handle.spell, "duration") - 1.8 end
@@ -573,7 +573,7 @@ function ability.OnUpdate()
                                 elseif Ability.GetName(item) == "item_pogo_stick" then
                                 elseif Ability.GetName(item) == "item_ring_of_aquila" then
                                 elseif Ability.GetName(item) == "item_vambrace" then
-                               -- elseif Ability.GetName(item) == "item_refresher_shard" or Ability.GetName(item) == "item_refresher" or Ability.GetName(item) == "item_mask_of_madness" then
+                                elseif Ability.GetName(item) == "item_refresher_shard" or Ability.GetName(item) == "item_refresher" or Ability.GetName(item) == "item_mask_of_madness" then
                                 else
                                     Ability.CastNoTarget(item)
                                     ability.sleeptime[Ability.GetName(item)] = GameRules.GetGameTime() + (NetChannel.GetAvgLatency(0) + NetChannel.GetAvgLatency(1)) + 0.5
@@ -2345,7 +2345,7 @@ function ability.get_distance(spell, npc)
             {name = "dark_willow_shadow_realm", radius = 1150},
             {name = "dark_willow_bedlam", radius = 300},
             {name = "death_prophet_exorcism", radius = 700},
-          --  {name = "doom_bringer_scorched_earth", radius = 600},
+            {name = "doom_bringer_scorched_earth", radius = 600},
             {name = "dragon_knight_elder_dragon_form", radius = 550},
             {name = "dragon_knight_fireball", radius = 600},
             {name = "drow_ranger_trueshot", radius = 99999},
@@ -2551,7 +2551,7 @@ function ability.get_distance(spell, npc)
             {name = "dawnbreaker_celestial_hammer", radius = Ability.GetLevelSpecialValueFor(spell, "range"), new_radius = Ability.GetLevelSpecialValueFor(spell, "range") + 1000, talent_name = "special_bonus_unique_dawnbreaker_celestial_hammer_cast_range"},
             --items
             {name = "item_phase_boots", radius = 2000},
-          --  {name = "item_refresher", radius = 2000},
+            {name = "item_refresher", radius = 2000},
             {name = "item_refresher_shard", radius = 2000},
             {name = "item_magic_wand", radius = 2000},
             {name = "item_magic_stick", radius = 2000},
