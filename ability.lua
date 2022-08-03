@@ -1314,7 +1314,7 @@ function ability.OnUpdate()
                                                     end
                                                 end
                                             end
-                                            if not NPC.HasModifier(target, "modifier_antimage_counterspell") and not NPC.HasModifier(target, "modifier_item_lotus_orb_active") then
+                                            if not NPC.HasModifier(target, "modifier_item_lotus_orb_active") then
                                                 if Ability.GetName(spell) == "windrunner_shackleshot" then
                                                     for _, tree in ipairs(Trees.InRadius(Entity.GetAbsOrigin(me), Ability.GetCastRange(spell) + 575, true)) do
                                                         if tree and ability.skillshotXYZ(me, target, 1500):Distance(Entity.GetAbsOrigin(tree)):Length2D() < 575 then
