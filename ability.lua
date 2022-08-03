@@ -2345,7 +2345,7 @@ function ability.get_distance(spell, npc)
             {name = "dark_willow_shadow_realm", radius = 1150},
             {name = "dark_willow_bedlam", radius = 300},
             {name = "death_prophet_exorcism", radius = 700},
-            {name = "doom_bringer_scorched_earth", radius = 600},
+          --  {name = "doom_bringer_scorched_earth", radius = 600},
             {name = "dragon_knight_elder_dragon_form", radius = 550},
             {name = "dragon_knight_fireball", radius = 600},
             {name = "drow_ranger_trueshot", radius = 99999},
@@ -2586,8 +2586,6 @@ function ability.get_distance(spell, npc)
             {name = "item_glimmer_cape", radius = 1000},
             {name = "item_trickster_cloak", radius = 1000},
             {name = "item_seer_stone", radius = 99999}
-			{name = "doom_bringer_doom", radius = 1000}
-			
         }
     ) do
         if lib then
