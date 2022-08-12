@@ -1972,7 +1972,7 @@ function ability.OnUpdate()
                                                 Ability.CastPosition(spell, ability.skillshotXYZ(me, target, 2000))
                                                 ability.sleeptime[Ability.GetName(spell)] = GameRules.GetGameTime() + (NetChannel.GetAvgLatency(0) + NetChannel.GetAvgLatency(1)) + 0.5
                                             end
-                                        elseif Ability.GetName(spell) == "mars_arena_of_blood" then
+                                        elseif Ability.GetName(spell) == "mars_arena_of_blood" and Entity.GetTeamNum(me), 0) > 1 then
                                             Ability.CastPosition(spell, Entity.GetAbsOrigin(me) + (ability.skillshotXYZ(me, target, 2000) - Entity.GetAbsOrigin(me)):Normalized():Scaled(Entity.GetAbsOrigin(me):Distance(ability.skillshotXYZ(me, target, 2000)):Length2D() / 2))
                                             ability.sleeptime[Ability.GetName(spell)] = GameRules.GetGameTime() + (NetChannel.GetAvgLatency(0) + NetChannel.GetAvgLatency(1)) + 0.5
                                         elseif Ability.GetName(spell) == "lion_voodoo" then
