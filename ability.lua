@@ -427,8 +427,9 @@ function ability.OnUpdate()
                                         ability.sleeptime[Ability.GetName(item)] = GameRules.GetGameTime() + (NetChannel.GetAvgLatency(0) + NetChannel.GetAvgLatency(1)) + 0.5
                                     end
                                 --elseif Ability.GetName(item) == "item_refresher_shard" or Ability.GetName(item) == "item_refresher" then
-                                    --if Ability.GetType(handle.spell) == 1 and (Ability.GetName(handle.spell) ~= "techies_land_mines" and Ability.SecondsSinceLastUse(handle.spell) > 1 and Ability.SecondsSinceLastUse(handle.spell) < 5 or Ability.GetName(handle.spell) == "techies_land_mines" and Ability.GetCurrentCharges(handle.spell) == 0) and NPC.GetMana(Heroes.GetLocal()) > Ability.GetManaCost(handle.spell) + Ability.GetManaCost(item) then
-                                       -- Ability.CastNoTarget(item)
+								elseif Ability.GetName(item) == "item_refresher_shard" then
+                                    if Ability.GetType(handle.spell) == 1 and (Ability.GetName(handle.spell) ~= "techies_land_mines" and Ability.SecondsSinceLastUse(handle.spell) > 1 and Ability.SecondsSinceLastUse(handle.spell) < 5 or Ability.GetName(handle.spell) == "techies_land_mines" and Ability.GetCurrentCharges(handle.spell) == 0) and NPC.GetMana(Heroes.GetLocal()) > Ability.GetManaCost(handle.spell) + Ability.GetManaCost(item) then
+                                        Ability.CastNoTarget(item)
                                         if Ability.GetName(handle.spell) == "faceless_void_chronosphere" then ability.sleeptime["faceless_void_chronosphere"] = GameRules.GetGameTime() + (NetChannel.GetAvgLatency(0) + NetChannel.GetAvgLatency(1)) + Ability.GetLevelSpecialValueFor(handle.spell, "duration") - 1.8 end
                                         ability.sleeptime["item_refresher_shard"], ability.sleeptime["item_refresher"] = GameRules.GetGameTime() + (NetChannel.GetAvgLatency(0) + NetChannel.GetAvgLatency(1)) + 0.5, GameRules.GetGameTime() + (NetChannel.GetAvgLatency(0) + NetChannel.GetAvgLatency(1)) + 0.5
                                         if Ability.GetName(handle.spell) == "tidehunter_ravage" then ability.sleeptime["tidehunter_ravage"] = GameRules.GetGameTime() + (NetChannel.GetAvgLatency(0) + NetChannel.GetAvgLatency(1)) + Ability.GetLevelSpecialValueFor(handle.spell, "duration") - 1.8 end
@@ -791,7 +792,8 @@ function ability.OnUpdate()
                                                 Ability.CastNoTarget(spell)
                                                 ability.sleeptime[Ability.GetName(spell)] = GameRules.GetGameTime() + (NetChannel.GetAvgLatency(0) + NetChannel.GetAvgLatency(1)) + 0.5
                                             end
-                                        elseif Ability.GetName(spell) == "terrorblade_terror_wave" or Ability.GetName(spell) == "earthshaker_echo_slam" or Ability.GetName(spell) == "kunkka_torrent_storm" or Ability.GetName(spell) == "magnataur_reverse_polarity" or Ability.GetName(spell) == "tidehunter_ravage" or Ability.GetName(spell) == "treant_overgrowth" or Ability.GetName(spell) == "medusa_stone_gaze" then
+											--tor
+                                        elseif Ability.GetName(spell) == "terrorblade_terror_wave" or Ability.GetName(spell) == "mars_arena_of_blood"or Ability.GetName(spell) == "earthshaker_echo_slam" or Ability.GetName(spell) == "kunkka_torrent_storm" or Ability.GetName(spell) == "magnataur_reverse_polarity" or Ability.GetName(spell) == "tidehunter_ravage" or Ability.GetName(spell) == "treant_overgrowth" or Ability.GetName(spell) == "medusa_stone_gaze" then
                                             if #Heroes.InRadius(Entity.GetAbsOrigin(me), distance, Entity.GetTeamNum(me), 0) > 1 then
                                                 Ability.CastNoTarget(spell)
                                                 ability.sleeptime[Ability.GetName(spell)] = GameRules.GetGameTime() + (NetChannel.GetAvgLatency(0) + NetChannel.GetAvgLatency(1)) + 0.5
@@ -2134,6 +2136,7 @@ function ability.OnUnitAnimation(animation)
                     {name = "cast_dagger_ani", spellname = "spectre_spectral_dagger"},
                     {name = "cast_doom_anim", spellname = "doom_bringer_doom"},
                     {name = "cast_hoofstomp_anim", spellname = "centaur_hoof_stomp"},
+					{name = "cast_hoofstomp_anim", spellname = "centaur_khan_war_stomp"},
                     {name = "cast_mana_void", spellname = "antimage_mana_void"},
                     {name = "cast_mana_void", spellname = "arc_warden_tempest_double"},
                     {name = "cast_tracker_anim", spellname = "bounty_hunter_track"},
@@ -2337,6 +2340,7 @@ function ability.get_distance(spell, npc)
             {name = "broodmother_insatiable_hunger", radius = 550},
             {name = "centaur_hoof_stomp", radius = 315},
             {name = "centaur_stampede", radius = 99999},
+			{name = "centaur_khan_war_stomp", radius = 215},
             {name = "chaos_knight_phantasm", radius = 2000},
             {name = "chen_hand_of_god", radius = 99999},
             {name = "clinkz_strafe", radius = 1000},
