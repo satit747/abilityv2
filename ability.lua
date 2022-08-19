@@ -16,7 +16,7 @@ local ability = {
     printing = {},
     throw_allies = false
 }
-
+--
 function ability.OnGameEnd()
     ability.particle = 0
     ability.walking = {}
