@@ -70,8 +70,8 @@ ability.ignorespell = {
     "invoker_ghost_walk",
     "invoker_invoke",
     "jakiro_liquid_fire",
-    "kunkka_tidebringer",
-    "kunkka_x_marks_the_spot",
+    "kunkku_tidebringer",
+    "kunkku_x_marks_the_spot",
     "legion_commander_duel",
     "lich_sinister_gaze",
     "lion_mana_drain",
@@ -397,8 +397,9 @@ function ability.OnUpdate()
                     if target and not NPC.HasState(me, Enum.ModifierState.MODIFIER_STATE_INVISIBLE) and Entity.IsAbility(item) and (ability.sleeptime[Ability.GetName(item)] == 0 or GameRules.GetGameTime() > ability.sleeptime[Ability.GetName(item)]) and (Ability.GetName(item) == "item_trickster_cloak" or Ability.GetName(item) == "item_glimmer_cape" or (not ability.channelling[me] or ability.channelling[me] < GameRules.GetGameTime()) and not NPC.IsChannellingAbility(me)) and Ability.IsReady(item) then
                         for _, handle in pairs(ability.handle) do
                             if handle.spell and Entity.IsAbility(handle.spell) then
-                                if Ability.GetName(item) == "item_blink" or Ability.GetName(item) == "item_overwhelming_blink" or Ability.GetName(item) == "item_swift_blink" or Ability.GetName(item) == "item_arcane_blink" then
-                                    if Ability.IsReady(handle.spell) then
+                               -- if Ability.GetName(item) == "item_blink" or Ability.GetName(item) == "item_overwhelming_blink" or Ability.GetName(item) == "item_swift_blink" or Ability.GetName(item) == "item_arcane_blink" then
+                                  if Ability.GetName(item) == "item_arcane_blink" then
+									if Ability.IsReady(handle.spell) then
                                         if Ability.GetName(handle.spell) == "legion_commander_duel" then ability.sleeptime["legion_commander_overwhelming_odds"] = GameRules.GetGameTime() + (NetChannel.GetAvgLatency(0) + NetChannel.GetAvgLatency(1)) + 1 end
                                         if Ability.GetName(handle.spell) == "enigma_black_hole" then ability.sleeptime["enigma_malefice"] = GameRules.GetGameTime() + (NetChannel.GetAvgLatency(0) + NetChannel.GetAvgLatency(1)) + 5.5 end
                                     end
@@ -614,8 +615,8 @@ function ability.OnUpdate()
                             if Ability.GetName(spell) == "dark_seer_vacuum" then ability.sleeptime["dark_seer_wall_of_replica"] = GameRules.GetGameTime() + (NetChannel.GetAvgLatency(0) + NetChannel.GetAvgLatency(1)) + 0.6 end
                             if Ability.GetName(spell) == "primal_beast_rock_throw" then ability.sleeptime["primal_beast_onslaught"] = GameRules.GetGameTime() + (NetChannel.GetAvgLatency(0) + NetChannel.GetAvgLatency(1)) + 0.1 end
                             if Ability.GetName(spell) == "primal_beast_pulverize" then ability.sleeptime["primal_beast_trample"] = GameRules.GetGameTime() + (NetChannel.GetAvgLatency(0) + NetChannel.GetAvgLatency(1)) + 0.1 end
-                            if Ability.GetName(spell) == "kunkka_torrent" then ability.sleeptime["kunkka_tidal_wave"] = GameRules.GetGameTime() + (NetChannel.GetAvgLatency(0) + NetChannel.GetAvgLatency(1)) + 1.4 end
-                            if Ability.GetName(spell) == "kunkka_ghostship" then ability.sleeptime["kunkka_tidal_wave"] = GameRules.GetGameTime() + (NetChannel.GetAvgLatency(0) + NetChannel.GetAvgLatency(1)) + 3.5 end
+                            if Ability.GetName(spell) == "kunkku_torrent" then ability.sleeptime["kunkku_tidal_wave"] = GameRules.GetGameTime() + (NetChannel.GetAvgLatency(0) + NetChannel.GetAvgLatency(1)) + 1.4 end
+                            if Ability.GetName(spell) == "kunkku_ghostship" then ability.sleeptime["kunkku_tidal_wave"] = GameRules.GetGameTime() + (NetChannel.GetAvgLatency(0) + NetChannel.GetAvgLatency(1)) + 3.5 end
                             if Ability.GetName(spell) == "earth_spirit_geomagnetic_grip" then ability.sleeptime["earth_spirit_rolling_boulder"] = GameRules.GetGameTime() + (NetChannel.GetAvgLatency(0) + NetChannel.GetAvgLatency(1)) + 0.1 end
                             if Ability.GetName(spell) == "windrunner_shackleshot" then ability.sleeptime["windrunner_powershot"] = GameRules.GetGameTime() + (NetChannel.GetAvgLatency(0) + NetChannel.GetAvgLatency(1)) + 0.1 end
                             --if Ability.GetName(spell) == "monkey_king_boundless_strike" then ability.sleeptime["monkey_king_primal_spring"] = GameRules.GetGameTime() + (NetChannel.GetAvgLatency(0) + NetChannel.GetAvgLatency(1)) + 0.1 end
@@ -726,7 +727,7 @@ function ability.OnUpdate()
                                                                     Ability.GetName(value.spell) == "invoker_deafening_blast" or 
                                                                     Ability.GetName(value.spell) == "snapfire_gobble_up" or 
                                                                     Ability.GetName(value.spell) == "terrorblade_terror_wave" or 
-                                                                    Ability.GetName(value.spell) == "kunkka_torrent_storm" or 
+                                                                    Ability.GetName(value.spell) == "kunkku_torrent_storm" or 
                                                                     Ability.GetName(value.spell) == "sniper_shrapnel" and Ability.GetLevel(value.spell) > 1))))
                                                                 then
                                                                     Ability.CastTarget(ability5, value.unit)
@@ -793,7 +794,7 @@ function ability.OnUpdate()
                                                 ability.sleeptime[Ability.GetName(spell)] = GameRules.GetGameTime() + (NetChannel.GetAvgLatency(0) + NetChannel.GetAvgLatency(1)) + 0.5
                                             end
 											--tor
-                                        elseif Ability.GetName(spell) == "terrorblade_terror_wave" or Ability.GetName(spell) == "mars_arena_of_blood"or Ability.GetName(spell) == "earthshaker_echo_slam" or Ability.GetName(spell) == "kunkka_torrent_storm" or Ability.GetName(spell) == "magnataur_reverse_polarity" or Ability.GetName(spell) == "tidehunter_ravage" or Ability.GetName(spell) == "treant_overgrowth" or Ability.GetName(spell) == "medusa_stone_gaze" then
+                                        elseif Ability.GetName(spell) == "terrorblade_terror_wave" or Ability.GetName(spell) == "mars_arena_of_blood"or Ability.GetName(spell) == "earthshaker_echo_slam" or Ability.GetName(spell) == "kunkku_torrent_storm" or Ability.GetName(spell) == "magnataur_reverse_polarity" or Ability.GetName(spell) == "tidehunter_ravage" or Ability.GetName(spell) == "treant_overgrowth" or Ability.GetName(spell) == "medusa_stone_gaze" then
                                             if #Heroes.InRadius(Entity.GetAbsOrigin(me), distance, Entity.GetTeamNum(me), 0) > 1 then
                                                 Ability.CastNoTarget(spell)
                                                 ability.sleeptime[Ability.GetName(spell)] = GameRules.GetGameTime() + (NetChannel.GetAvgLatency(0) + NetChannel.GetAvgLatency(1)) + 0.5
@@ -1010,7 +1011,7 @@ function ability.OnUpdate()
                                         end
                                     elseif (Ability.GetBehavior(spell) & Enum.AbilityBehavior.DOTA_ABILITY_BEHAVIOR_AUTOCAST) ~= 0 then
                                         if (Ability.GetBehavior(spell) & Enum.AbilityBehavior.DOTA_ABILITY_BEHAVIOR_UNIT_TARGET) ~= 0 then
-                                            if Ability.GetName(spell) == "clinkz_searing_arrows" or Ability.GetName(spell) == "drow_ranger_frost_arrows" or Ability.GetName(spell) == "kunkka_tidebringer" or Ability.GetName(spell) == "viper_poison_attack" or Ability.GetName(spell) == "enchantress_impetus" or Ability.GetName(spell) == "enchantress_impetus" or Ability.GetName(spell) == "huskar_burning_spear" or Ability.GetName(spell) == "bounty_hunter_jinada" or Ability.GetName(spell) == "jakiro_liquid_fire" or Ability.GetName(spell) == "jakiro_liquid_ice" or Ability.GetName(spell) == "doom_bringer_infernal_blade" or Ability.GetName(spell) == "ancient_apparition_chilling_touch" or Ability.GetName(spell) == "silencer_glaives_of_wisdom" or Ability.GetName(spell) == "obsidian_destroyer_arcane_orb" or Ability.GetName(spell) == "tusk_walrus_punch" then
+                                            if Ability.GetName(spell) == "clinkz_searing_arrows" or Ability.GetName(spell) == "drow_ranger_frost_arrows" or Ability.GetName(spell) == "kunkku_tidebringer" or Ability.GetName(spell) == "viper_poison_attack" or Ability.GetName(spell) == "enchantress_impetus" or Ability.GetName(spell) == "enchantress_impetus" or Ability.GetName(spell) == "huskar_burning_spear" or Ability.GetName(spell) == "bounty_hunter_jinada" or Ability.GetName(spell) == "jakiro_liquid_fire" or Ability.GetName(spell) == "jakiro_liquid_ice" or Ability.GetName(spell) == "doom_bringer_infernal_blade" or Ability.GetName(spell) == "ancient_apparition_chilling_touch" or Ability.GetName(spell) == "silencer_glaives_of_wisdom" or Ability.GetName(spell) == "obsidian_destroyer_arcane_orb" or Ability.GetName(spell) == "tusk_walrus_punch" then
                                                 Ability.CastTarget(spell, target)
                                                elseif Ability.GetName(spell) == "weaver_geminate_attack" then
                                                 if (not NPC.HasModifier(me, "modifier_weaver_shukuchi") or ability.calling[NPC.GetUnitName(target)] == "damaged" and Entity.GetAbsOrigin(me):Distance(Entity.GetAbsOrigin(target)):Length2D() > NPC.GetAttackRange(me) - 90) then
@@ -1119,10 +1120,10 @@ function ability.OnUpdate()
                                                 ability.sleeptime["hoodwink_bushwhack"], ability.sleeptime[Ability.GetName(spell)] = GameRules.GetGameTime() + (NetChannel.GetAvgLatency(0) + NetChannel.GetAvgLatency(1)) + Entity.GetAbsOrigin(me):Distance(Entity.GetAbsOrigin(target)):Length2D() / 700, GameRules.GetGameTime() + (NetChannel.GetAvgLatency(0) + NetChannel.GetAvgLatency(1)) + 0.5
                                             elseif Ability.GetName(spell) == "pugna_life_drain" or Ability.GetName(spell) == "furion_sprout" then
                                                 Ability.CastTarget(spell, target)
-                                            elseif Ability.GetName(spell) == "kunkka_x_marks_the_spot" then
+                                            elseif Ability.GetName(spell) == "kunkku_x_marks_the_spot" then
                                                 if Entity.GetAbsOrigin(me):Distance(Entity.GetAbsOrigin(target)):Length2D() > NPC.GetAttackRange(me) + 100 then
                                                     Ability.CastTarget(spell, target)
-                                                    ability.sleeptime["kunkka_return"], ability.cast_pos[Ability.GetName(spell)] = GameRules.GetGameTime() + (NetChannel.GetAvgLatency(0) + NetChannel.GetAvgLatency(1)) + 1.5, Entity.GetAbsOrigin(target)
+                                                    ability.sleeptime["kunkku_return"], ability.cast_pos[Ability.GetName(spell)] = GameRules.GetGameTime() + (NetChannel.GetAvgLatency(0) + NetChannel.GetAvgLatency(1)) + 1.5, Entity.GetAbsOrigin(target)
                                                 end
                                             elseif Ability.GetName(spell) == "magnataur_empower" then
                                                 if not NPC.HasModifier(me, "modifier_magnataur_empower") then
@@ -1382,6 +1383,28 @@ function ability.OnUpdate()
                                                         Ability.CastTarget(spell, target)
                                                         ability.sleeptime[Ability.GetName(spell)] = GameRules.GetGameTime() + (NetChannel.GetAvgLatency(0) + NetChannel.GetAvgLatency(1)) + 0.5
                                                     end
+	local myHero = Heroes.GetLocal()
+    if not myHero or not Utility.IsSuitableToCastSpell(myHero) then return end
+    if NPC.GetCurrentLevel(myHero) < 6 then return end
+
+    local spell = NPC.GetAbility(myHero, "rubick_telekinesis")
+    if not spell or not Ability.IsCastable(spell, NPC.GetMana(myHero)) then return end
+    local range = Utility.GetCastRange(myHero, spell)
+
+    for i = 1, Heroes.Count() do
+        local enemy = Heroes.Get(i)
+        if enemy and not NPC.IsIllusion(enemy) and not Entity.IsSameTeam(myHero, enemy)
+        and Utility.CanCastSpellOn(enemy) and NPC.IsEntityInRange(myHero, enemy, range)
+        and not Utility.IsDisabled(enemy) and not Utility.IsLinkensProtected(enemy)
+        and not Utility.IsLotusProtected(enemy) then
+
+            Ability.CastTarget(spell, enemy)
+            return
+        end
+    end	
+	
+
+
                                                 elseif Ability.GetName(spell) == "rubick_telekinesis" then
                                                     if ability.npc_stunned(spell, target) then
                                                         if NPC.HasModifier(me, "modifier_item_aghanims_shard") then
@@ -1753,10 +1776,10 @@ function ability.OnUpdate()
                                         elseif Ability.GetName(spell) == "warlock_rain_of_chaos" then
                                             Ability.CastPosition(spell, ability.skillshotAOE(me, target, 900))
                                             ability.sleeptime[Ability.GetName(spell)] = GameRules.GetGameTime() + (NetChannel.GetAvgLatency(0) + NetChannel.GetAvgLatency(1)) + 0.5
-                                        elseif Ability.GetName(spell) == "kunkka_ghostship" then
-                                            if NPC.HasModifier(target, "modifier_kunkka_x_marks_the_spot") or NPC.IsStunned(target) or NPC.IsRooted(target) then
-                                                if ability.cast_pos["kunkka_x_marks_the_spot"] then
-                                                    Ability.CastPosition(spell, ability.cast_pos["kunkka_x_marks_the_spot"])
+                                        elseif Ability.GetName(spell) == "kunkku_ghostship" then
+                                            if NPC.HasModifier(target, "modifier_kunkku_x_marks_the_spot") or NPC.IsStunned(target) or NPC.IsRooted(target) then
+                                                if ability.cast_pos["kunkku_x_marks_the_spot"] then
+                                                    Ability.CastPosition(spell, ability.cast_pos["kunkku_x_marks_the_spot"])
                                                     ability.sleeptime[Ability.GetName(spell)] = GameRules.GetGameTime() + (NetChannel.GetAvgLatency(0) + NetChannel.GetAvgLatency(1)) + 0.5
                                                 else
                                                     Ability.CastPosition(spell, ability.skillshotAOE(me, target, 637.5))
@@ -1918,10 +1941,10 @@ function ability.OnUpdate()
                                         elseif Ability.GetName(spell) == "ancient_apparition_ice_blast" then
                                             Ability.CastPosition(spell, ability.skillshotXYZ(me, target, 1000))
                                             ability.sleeptime["ancient_apparition_ice_blast_release"], ability.sleeptime[Ability.GetName(spell)] = GameRules.GetGameTime() + (NetChannel.GetAvgLatency(0) + NetChannel.GetAvgLatency(1)) + Entity.GetAbsOrigin(me):Distance(Entity.GetAbsOrigin(target)):Length2D() / 1300, GameRules.GetGameTime() + (NetChannel.GetAvgLatency(0) + NetChannel.GetAvgLatency(1)) + 0.5
-                                        elseif Ability.GetName(spell) == "kunkka_torrent" then
-                                            if NPC.HasModifier(target, "modifier_kunkka_x_marks_the_spot") or NPC.IsStunned(target) or NPC.IsRooted(target) then
-                                                if ability.cast_pos["kunkka_x_marks_the_spot"] then
-                                                    Ability.CastPosition(spell, ability.cast_pos["kunkka_x_marks_the_spot"])
+                                        elseif Ability.GetName(spell) == "kunkku_torrent" then
+                                            if NPC.HasModifier(target, "modifier_kunkku_x_marks_the_spot") or NPC.IsStunned(target) or NPC.IsRooted(target) then
+                                                if ability.cast_pos["kunkku_x_marks_the_spot"] then
+                                                    Ability.CastPosition(spell, ability.cast_pos["kunkku_x_marks_the_spot"])
                                                     ability.sleeptime[Ability.GetName(spell)] = GameRules.GetGameTime() + (NetChannel.GetAvgLatency(0) + NetChannel.GetAvgLatency(1)) + 0.5
                                                 else
                                                     Ability.CastPosition(spell, ability.skillshotXYZ(me, target, 1000))
@@ -1972,9 +1995,11 @@ function ability.OnUpdate()
                                                 Ability.CastPosition(spell, ability.skillshotXYZ(me, target, 2000))
                                                 ability.sleeptime[Ability.GetName(spell)] = GameRules.GetGameTime() + (NetChannel.GetAvgLatency(0) + NetChannel.GetAvgLatency(1)) + 0.5
                                             end
-                                        elseif Ability.GetName(spell) == "mars_arena_of_blood" and Entity.GetTeamNum(me), 0) > 1 then
+                                        elseif Ability.GetName(spell) == "mars_arena_of_blood" then
+										 if #Heroes.InRadius(Entity.GetAbsOrigin(me), distance, Entity.GetTeamNum(me), 0) > 1 then
                                             Ability.CastPosition(spell, Entity.GetAbsOrigin(me) + (ability.skillshotXYZ(me, target, 2000) - Entity.GetAbsOrigin(me)):Normalized():Scaled(Entity.GetAbsOrigin(me):Distance(ability.skillshotXYZ(me, target, 2000)):Length2D() / 2))
                                             ability.sleeptime[Ability.GetName(spell)] = GameRules.GetGameTime() + (NetChannel.GetAvgLatency(0) + NetChannel.GetAvgLatency(1)) + 0.5
+										end
                                         elseif Ability.GetName(spell) == "lion_voodoo" then
                                             Ability.CastPosition(spell, ability.skillshotXYZ(me, target, 2000))
                                             ability.sleeptime[Ability.GetName(spell)] = GameRules.GetGameTime() + (NetChannel.GetAvgLatency(0) + NetChannel.GetAvgLatency(1)) + 0.5
@@ -2008,7 +2033,7 @@ function ability.OnUpdate()
                                                 Ability.CastPosition(spell, Entity.GetAbsOrigin(target))
                                                 ability.sleeptime[Ability.GetName(spell)] = GameRules.GetGameTime() + (NetChannel.GetAvgLatency(0) + NetChannel.GetAvgLatency(1)) + 0.5
                                             end
-                                        elseif Ability.GetName(spell) == "kunkka_tidal_wave" then
+                                        elseif Ability.GetName(spell) == "kunkku_tidal_wave" then
                                             for _, tree in ipairs(Trees.InRadius(Entity.GetAbsOrigin(me), 9999, true)) do
                                                 if tree then
                                                     if (Entity.GetAbsOrigin(tree):GetX() - ability.skillshotXYZ(me, target, 2000):GetX()) / (Entity.GetAbsOrigin(me):GetX() - ability.skillshotXYZ(me, target, 2000):GetX()) < 0 and (Entity.GetAbsOrigin(tree):GetY() - ability.skillshotXYZ(me, target, 2000):GetY()) / (Entity.GetAbsOrigin(me):GetY() - ability.skillshotXYZ(me, target, 2000):GetY()) < 0 and math.abs((Entity.GetAbsOrigin(tree):GetX() - ability.skillshotXYZ(me, target, 2000):GetX()) / (Entity.GetAbsOrigin(me):GetX() - ability.skillshotXYZ(me, target, 2000):GetX()) - (Entity.GetAbsOrigin(tree):GetY() - ability.skillshotXYZ(me, target, 2000):GetY()) / (Entity.GetAbsOrigin(me):GetY() - ability.skillshotXYZ(me, target, 2000):GetY())) < 1 then
@@ -2291,7 +2316,7 @@ function ability.npc_stunned(spell, npc)
             "modifier_faceless_void_chronosphere_freeze",
             "modifier_jakiro_ice_path_stun",
             "modifier_keeper_of_the_light_mana_leak_stun",
-            "modifier_kunkka_torrent",
+            "modifier_kunkku_torrent",
             "modifier_legion_commander_duel",
             "modifier_lion_impale",
             "modifier_lion_voodoo",
@@ -2477,8 +2502,8 @@ function ability.get_distance(spell, npc)
             {name = "rubick_telekinesis_land", radius = 2000},
             {name = "wisp_spirits_in", radius = 2000},
             {name = "wisp_spirits_out", radius = 2000},
-            {name = "kunkka_return", radius = 2000},
-            {name = "kunkka_torrent_storm", radius = 2000},
+            {name = "kunkku_return", radius = 2000},
+            {name = "kunkku_torrent_storm", radius = 2000},
             {name = "phoenix_icarus_dive_stop", radius = 99999},
             {name = "phoenix_sun_ray_toggle_move", radius = 99999},
             {name = "storm_spirit_overload", radius = 1000},
